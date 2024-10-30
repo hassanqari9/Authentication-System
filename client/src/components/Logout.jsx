@@ -1,13 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axios';  // Use the axios instance
 
-const Logout = ({setLog, setToken}) => {
+const Logout = () => {
+    const navigate = useNavigate();  
+
     const handleLogout = async () => {
         try {
-            setToken(null)
             localStorage.removeItem('accessToken');
-            const response = await axiosInstance.post('/api/logout');
+            const response = await axiosInstance.post('/api/auth/logout');
             alert(response.data.message)
-            
+            navigate("/login", { replace: true });
         } catch (error) {
             console.error('Logout failed:', error);
         }

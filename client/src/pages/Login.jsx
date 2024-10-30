@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ setLog, setToken }) => {
+const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -12,16 +14,16 @@ const Login = ({ setLog, setToken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/api/login", formData);
+      const response = await axiosInstance.post("/api/auth/login", formData);
       alert(response.data.message)
       
       const { accessToken } = response.data;
       // console.log(accessToken);
       
       // Store the access token in localStorage
-      setToken(accessToken);
       localStorage.setItem("accessToken", accessToken);
       // localStorage.setItem("refreshToken", refreshToken);
+      navigate("/", { replace: true });
 
     } catch (error) {  
       console.log(error);
@@ -49,7 +51,7 @@ const Login = ({ setLog, setToken }) => {
       </form>
       {error && <p>{error}</p>}
 
-      <button onClick={() => setLog(false)}>Dont have an account? Register</button>
+      <a onClick={() => navigate("/register", { replace: true })}>Dont have an account? Register</a>
     </div>
   );
 };

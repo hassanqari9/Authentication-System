@@ -1,0 +1,19 @@
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+
+import authRoutes from './routes/authRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+
+const app = express();
+
+// Middleware
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(express.json());
+app.use(cookieParser());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+
+app.listen(4000, () => console.log('Server running on http://localhost:4000'));

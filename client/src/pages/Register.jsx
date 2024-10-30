@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axiosInstance from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
-const Register = ({setLog}) => {
+const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -16,9 +18,9 @@ const Register = ({setLog}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/api/register", formData);
+      const response = await axiosInstance.post("/api/auth/register", formData);
       alert(response.data.message)
-      setLog(true)
+      navigate("/login", { replace: true });
       
     } catch (error) {
       console.log(error);
@@ -52,7 +54,7 @@ const Register = ({setLog}) => {
       </form>
       {error && <p>{error}</p>}
 
-      <button onClick={() => setLog(true)}>Already have an account? Login</button>
+      <a onClick={() => navigate("/login", { replace: true })}>Already have an account? Login</a>
     </div>
   );
 };
