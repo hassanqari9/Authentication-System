@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: 'https://vercel.com/safeautoparts/authentication-system', 
+    origin: 'https://authentication-system-drab.vercel.app', 
     credentials: true,  
 }));
 app.use(express.json());
