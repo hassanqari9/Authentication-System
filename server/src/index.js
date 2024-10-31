@@ -8,7 +8,7 @@ import userRoutes from './routes/userRoutes.js'
 const app = express();
 
 // Middleware
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
