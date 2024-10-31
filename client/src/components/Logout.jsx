@@ -7,8 +7,7 @@ const Logout = () => {
     const handleLogout = async () => {
         try {
             localStorage.removeItem('accessToken');
-            const response = await axiosInstance.post('/api/auth/logout');
-            alert(response.data.message)
+            await axiosInstance.post('/api/auth/logout');
             navigate("/login", { replace: true });
         } catch (error) {
             console.error('Logout failed:', error);
