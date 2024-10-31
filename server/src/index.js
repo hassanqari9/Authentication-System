@@ -16,4 +16,4 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
-app.listen(4000, () => console.log('Server running on http://localhost:4000'));
+app.listen(process.env.PORT || 4000, () => console.log('Server running on http://localhost:4000'));
