@@ -17,7 +17,7 @@ export const registerUser = async (req, res) => {
             password,
             refreshToken: null
         })
-        console.log(userArray);
+        // console.log(userArray);
         res.status(201).json({ message: 'User registered successfully' });
     } catch (err) {
         res.status(500).json({ error: 'Error registering user' });
@@ -40,7 +40,7 @@ export const loginUser = async (req, res) => {
     const refreshToken = generateRefreshToken(user.username);
 
     user.refreshToken = refreshToken;
-    console.log(userArray);
+    // console.log(userArray);
     
 
     res.cookie('refreshToken', refreshToken, {
@@ -48,14 +48,12 @@ export const loginUser = async (req, res) => {
         secure: true,
         sameSite: 'Strict',
         path: '/',
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7days
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
     });
     res.status(201).json({ accessToken, message: 'User logged successfully'});
-    // res.json({ accessToken, refreshToken });
 }
 
 export const tokenRefresh = async (req, res) => {
-    // const { refreshToken } = req.body
     const refreshToken = req.cookies.refreshToken;
 
     if (!refreshToken) return res.status(401).json({ error: 'No refresh token provided' });
@@ -70,8 +68,6 @@ export const tokenRefresh = async (req, res) => {
             return res.status(405).json({ error: 'Invalid refresh token' });
         }
 
-
-        // Generate a new access token
         const newAccessToken = generateAccessToken(user.username);
         res.json({ accessToken: newAccessToken });
     } catch (err) {
@@ -91,7 +87,7 @@ export const logoutUser =  async (req, res) => {
         if (!user) return res.status(401).json({ error: 'User not found' });
         if (user) {
             user.refreshToken = null;
-            console.log(userArray);
+            // console.log(userArray);
         }
 
         res.clearCookie('refreshToken', { path: '/' });
