@@ -1,25 +1,9 @@
-// src/components/Profile.js
-import React, { useState, useEffect } from 'react';
-import axiosInstance from '../api/axios';  // Use the Axios instance with interceptors
+import React, { useState } from 'react';
 import Logout from './Logout';
+import useFetchData from '../hooks/useFetchData';
 
 const Profile = () => {
-    const [profile, setProfile] = useState(null);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await axiosInstance.get('/api/user/me');
-                setProfile(response.data.user);
-            } catch (err) {
-                console.error('Error fetching profile:', err);
-                setError('Error fetching profile data.');
-            }
-        };
-
-        fetchProfile();
-    }, []);
+    const {data:profile, error} = useFetchData()
 
     if (error) {
         return <div>{error}</div>;
