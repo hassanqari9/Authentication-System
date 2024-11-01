@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Logout from './Logout';
 import useFetchData from '../hooks/useFetchData';
+import { getUser } from '../apis/userApis';
 
 const Profile = () => {
-    const {data:profile, error} = useFetchData()
+    const {data:profile, error} = useFetchData(getUser)
 
     if (error) {
         return <div>{error}</div>;

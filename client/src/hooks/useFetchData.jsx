@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../apis/axios";
 
-function useFetchData() {
+function useFetchData(getUser) {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("/api/user/me");
+        const response = await getUser()
         setData(response.data.user);
       } catch (err) {
         console.error("Error fetching profile:", err);
         setError("Error fetching profile data.");
       }
-    };
+    }
 
     fetchData();
   }, []);

@@ -1,7 +1,9 @@
 import axios from 'axios';
+import { tokenRefresh } from './authApis';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://authentication-system-qew1.onrender.com' || 'http://localhost:4000',  
+    baseURL: 'https://authentication-system-qew1.onrender.com',
+    // baseURL: 'http://localhost:4000',  
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
@@ -40,12 +42,9 @@ axiosInstance.interceptors.response.use(
             try {
                 console.log("Refreshing token...");
                 
-                // const refreshToken = localStorage.getItem('refreshToken');
-                // const { data } = await axios.post('http://localhost:4000/api/refresh-token', { refreshToken: refreshToken });
-                const { data } = await axiosInstance.post('/api/auth/refresh-token');
+                const { data } = await tokenRefresh()
                 const newAccessToken = data.accessToken;
 
-                // Store new access token in localStorage
                 localStorage.setItem('accessToken', newAccessToken);
 
                 // Retry the original request with the new token

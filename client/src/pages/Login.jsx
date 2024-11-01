@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axiosInstance from "../apis/axios";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../apis/authApis";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/api/auth/login", formData);
+      const response = await loginUser(formData)
       alert(response.data.message)
       
       const { accessToken } = response.data;
