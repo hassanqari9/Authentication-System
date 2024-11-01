@@ -11,6 +11,7 @@ const Register = () => {
     password: "",
   })
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,7 +20,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await createUser(formData)
+      setLoading(false);
       alert(response.data.message)
       navigate("/login", { replace: true });
       
@@ -51,7 +54,7 @@ const Register = () => {
           placeholder="Password"
           onChange={handleChange}
         />
-        <button type="submit">Register</button>
+        <button disabled={loading} type="submit">Register</button>
       </form>
       {error && <p>{error}</p>}
 

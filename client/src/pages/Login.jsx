@@ -6,6 +6,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,7 +15,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await loginUser(formData)
+      setLoading(false);
       alert(response.data.message)
       
       const { accessToken } = response.data;
@@ -47,7 +50,7 @@ const Login = () => {
           placeholder="Password"
           onChange={handleChange}
         />
-        <button type="submit">Login</button>
+        <button disabled={loading} type="submit">Login</button>
       </form>
       {error && <p>{error}</p>}
 
