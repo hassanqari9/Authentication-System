@@ -22,13 +22,14 @@ const Register = () => {
     try {
       setLoading(true);
       const response = await createUser(formData)
-      setLoading(false);
       alert(response.data.message)
       navigate("/login", { replace: true });
       
     } catch (error) {
       console.log(error);
       setError(error?.response?.data?.error || "Register failed. Please check your credentials. ");
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -31,6 +31,8 @@ const Login = () => {
     } catch (error) {  
       console.log(error);
       setError(error?.response?.data?.error || "Login failed. Please check your credentials. ");
+    } finally {
+      setLoading(false);
     }
   };
 
